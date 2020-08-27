@@ -25,11 +25,68 @@ class Hangman extends Component {
     }
   }
 
+  handleGuess = e => {
+    let letter = e.target.value;
+    this.setState(st => ({
+      guessed: st.guessed.add(letter),
+      mistake: st.mistake + (st.answer.includes(letter) ? 0 : 1)
+    }));
+  }
+
+  guessedWord() {
+    return this.state.answer.split("").map(letter => (this.state.guessed.has(letter) ? letter : " _ "));
+  }
+
+  generateButtons() {
+    return "abcdefghijklmnopqrstuvwxyz".split("").map(letter => (
+      <button
+        class="btn btn-lg btn-primary m-2"
+        key={letter}
+        value={letter}
+        onClick={this.handleGuess}
+        disabled={this.state.guessed.has(letter)}
+      >
+        {letter}
+      </button>
+    ));
+  }
+
+  resetButton = () => {
+    this.setState({
+      mistake: 0,
+      guessed: new Set([]),
+      answer: randomWord()
+    });
+  }
+
   render() {
+    const gameOver = this.state.mistake >= this.props.maxWrong;
+    let gameStat = this.generateButtons();
+    const isWinner = this.guessedWord().join("") === this.state.answer;
+
+    if (isWinner) {
+      gameStat = "You Won!!!"
+    }
+
+    if (gameOver) {
+      gameStat = "You Lost!!"
+    }
+
     return (
       <div className="Hangman container">
         <h1 className="text-center"> Hangman</h1>
         <div className="float-right">Wrong Guesses: {this.state.mistake} of {this.props.maxWrong}</div>
+        <div className="text-center">
+          <img src={this.props.images[this.state.mistake]} alt="" />
+        </div>
+        <div className="text-center">
+          <p> Guess the programming Language:</p>
+          <p>
+            {!gameOver ? this.guessedWord() : this.state.answer}
+          </p>
+          <p>{gameStat}</p>
+          <button className="btn btn-info" onClick={this.resetButton}>Reset</button>
+        </div>
       </div>
     )
   }

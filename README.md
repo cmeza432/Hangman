@@ -1,4 +1,4 @@
-### Hangman
+## Hangman
 Hello!! This is a Hangman game created with React. It is a simple fun project to help me learn React.
 
 
