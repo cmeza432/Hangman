@@ -1,4 +1,4 @@
-var programming_languages = [
+var pool_of_words = [
     "java",
     "python",
     "javascript",
@@ -16,7 +16,7 @@ var programming_languages = [
 ]
 
 function randomWord() {
-    return programming_languages[Math.floor(Math.random() * programming_languages.length)]
+    return pool_of_words[Math.floor(Math.random() * pool_of_words.length)]
 }
 
 export { randomWord }
