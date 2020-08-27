@@ -1,3 +1,7 @@
+### Hangman
+Hello!! This is a Hangman game created with React. It is a simple fun project to help me learn React.
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
