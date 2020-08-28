@@ -22,8 +22,8 @@ class Hangman extends Component {
     super(props);
     this.state = {
       mistake: 0,
-      guessed: new Set([]),
-      answer: randomWord()
+      guessed: new Set([" "]),
+      answer: randomWord().toUpperCase()
     }
   }
 
@@ -44,10 +44,10 @@ class Hangman extends Component {
 
   // This will generate the buttons for each letter of the alphabet.
   generateButtons() {
-    return "abcdefghijklmnopqrstuvwxyz".split("").map(letter => (
+    return "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(letter => (
       <button
-        // Represent the buttons as large with 2px spacew
-        class="btn btn-lg btn-primary m-2"
+        // Represent the buttons as large with 2px space
+        class="btn btn-lg btn-dark m-2"
         key={letter}
         value={letter}
         // Call function to handle the guess to add to set of guessed letters and increment of wrong counter
@@ -65,8 +65,8 @@ class Hangman extends Component {
   resetButton = () => {
     this.setState({
       mistake: 0,
-      guessed: new Set([]),
-      answer: randomWord()
+      guessed: new Set([" "]),
+      answer: randomWord().toUpperCase()
     });
   }
 
@@ -92,7 +92,7 @@ class Hangman extends Component {
           <img src={this.props.images[this.state.mistake]} alt="" />
         </div>
         <div className="text-center">
-          <p> Guess the Word:</p>
+          <p> Guess the Horror Movie:</p>
           <p>
             {!gameOver ? this.guessedWord() : this.state.answer}
           </p>
