@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Hangman.css';
 import { randomWord } from './Words.js';
+import Popup from './Popup.js';
 // Import images from the components/images folder that represent image of hangman
 import step0 from './images/0.jpg';
 import step1 from './images/1.jpg';
@@ -23,6 +24,7 @@ class Hangman extends Component {
     this.state = {
       mistake: 0,
       guessed: new Set([""]),
+      showPopup: false,
       answer: randomWord().toUpperCase()
     }
   }
@@ -66,7 +68,16 @@ class Hangman extends Component {
     this.setState({
       mistake: 0,
       guessed: new Set([""]),
+      showPopup: false,
       answer: randomWord().toUpperCase()
+    });
+  }
+
+  // Function: this function handles the popup for once the game is won
+  // Output: display or remove popup for game end
+  togglePopup() {
+    this.setState({
+      showPopup: !this.state.showPopup
     });
   }
 
@@ -74,14 +85,17 @@ class Hangman extends Component {
     // Boolean values to check if Game is over or user has won
     const gameOver = this.state.mistake >= this.props.maxWrong;
     let gameStat = this.generateButtons();
+    let gameEnd = false;
     const isWinner = this.guessedWord().join("") === this.state.answer;
 
     if (isWinner) {
-      gameStat = "Congratulations!! You guessed the correct word!! Reset and play again!"
+      gameStat = "You Won!! Try again!"
+      gameEnd = true;
     }
 
     if (gameOver) {
-      gameStat = "You Lost!! Reset and try again!!"
+      gameStat = "You Lost!! Try again!!"
+      gameEnd = true;
     }
 
     return (
@@ -92,11 +106,17 @@ class Hangman extends Component {
           <img src={this.props.images[this.state.mistake]} alt="" />
         </div>
         <div className="text-center">
-          <p> Guess the Horror Movie:</p>
+          <p> Guess the Word:</p>
           <p>
             {!gameOver ? this.guessedWord() : this.state.answer}
           </p>
           <p>{gameStat}</p>
+          {gameEnd ?
+            <Popup
+              text={gameStat}
+              closePopup={this.togglePopup.bind(this)}
+              reset={this.resetButton} />
+            : null}
           <button className="btn btn-lg btn-danger" onClick={this.resetButton}>Reset</button>
         </div>
       </div>
