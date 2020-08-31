@@ -84,17 +84,19 @@ class Hangman extends Component {
   render() {
     // Boolean values to check if Game is over or user has won
     const gameOver = this.state.mistake >= this.props.maxWrong;
+    // Generate buttons for gamestat var, when end of game change value
     let gameStat = this.generateButtons();
     let gameEnd = false;
+    let endMessage;
     const isWinner = this.guessedWord().join("") === this.state.answer;
 
     if (isWinner) {
-      gameStat = "You Won!! Try again!"
+      endMessage = "You Won!! Try again!"
       gameEnd = true;
     }
 
     if (gameOver) {
-      gameStat = "You Lost!! Try again!!"
+      endMessage = "You Lost!! Try again!!"
       gameEnd = true;
     }
 
@@ -113,7 +115,7 @@ class Hangman extends Component {
           <p>{gameStat}</p>
           {gameEnd ?
             <Popup
-              text={gameStat}
+              text={endMessage}
               closePopup={this.togglePopup.bind(this)}
               reset={this.resetButton} />
             : null}
