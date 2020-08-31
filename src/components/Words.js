@@ -1,5 +1,5 @@
 var answer_words = [
-    "dog"
+    "dog",
     "chocolate",
     "controller",
     "mouse",
