@@ -22,7 +22,7 @@ class Hangman extends Component {
     super(props);
     this.state = {
       mistake: 0,
-      guessed: new Set([" "]),
+      guessed: new Set([""]),
       answer: randomWord().toUpperCase()
     }
   }
@@ -65,7 +65,7 @@ class Hangman extends Component {
   resetButton = () => {
     this.setState({
       mistake: 0,
-      guessed: new Set([" "]),
+      guessed: new Set([""]),
       answer: randomWord().toUpperCase()
     });
   }
